@@ -6,6 +6,7 @@ import {
   View,
   Text,
   StatusBar,
+  Image,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -41,6 +42,7 @@ const App = () => {
   );
 };
 
+import PlusButton from './assets/plus.svg';
 const styles = StyleSheet.create({
   container: {flex: 1, flexDirection: 'column'},
   headerText: {
@@ -68,11 +70,11 @@ const styles = StyleSheet.create({
   },
   nbCenterButton: {
     borderColor: '#fff',
-    borderWidth: 1,
-    backgroundColor: '#fff',
-    borderRadius: 10,
+    // borderWidth: 1,
+    // backgroundColor: '#fff',
+    // borderRadius: 10,
     elevation: 20,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
   },
   textDimmColor: {
     color: 'rgba(256,256,256,0.5)',
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
+import {SvgUri} from 'react-native-svg';
 const NavigationBar = (props) => {
   return (
     <View style={styles.navbarContainer}>
@@ -100,8 +102,11 @@ const NavigationBar = (props) => {
           }}></Icon>
         <Text style={({color: '#fff'}, styles.textDimmColor)}>Explore</Text>
       </View>
+
       <View style={styles.nbCenterButton}>
-        <Text style={{color: '#000', fontSize: 32, fontWeight: '900'}}>+</Text>
+        <PlusButton width={'75'} height={'35'} />
+        {/* <Image source="./assets/plus.svg" /> */}
+        {/* <Text style={{color: '#000', fontSize: 32, fontWeight: '900'}}>+</Text> */}
       </View>
       <View>
         <Icon

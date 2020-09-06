@@ -4,14 +4,16 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
-  Pressable,
+  Text,
+  ActivityIndicator,
 } from 'react-native';
 import Video from 'react-native-video';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export const VideoPlayer = ({url}) => {
   let [isVideoPaused, setVideoPaused] = useState(false);
   let [videoLength, setVideoLength] = useState(200);
-
+  let [isLoading, setLoading] = useState(false);
   function videoProgress(e) {
     setVideoLength((videoLength = e.currentTime * 30));
     if (e.currentTime >= e.playableDuration) setVideoLength((videoLength = 0));
@@ -21,17 +23,37 @@ export const VideoPlayer = ({url}) => {
     setVideoPaused((isVideoPaused = !isVideoPaused));
   }
 
-  function onLoad() {}
+  function onLoad(data) {
+    setLoading(false);
+  }
+  function onLoadStart(data) {
+    setLoading(true);
+  }
   return (
     <>
+      {isLoading && (
+        <View style={styles.loader}>
+          <ActivityIndicator color="#fff" size={50}></ActivityIndicator>
+        </View>
+      )}
+      {!isLoading && (
+        <>
+          <View style={styles.otherContentTwo}>
+            <HorizontalContent />
+          </View>
+          <View style={styles.otherContentOne}>
+            <VerticalContent />
+          </View>
+        </>
+      )}
       <TouchableOpacity onPress={onTouch} activeOpacity={0.9}>
         <View>
-          <View style={styles.otherContent}></View>
           <Video
             repeat={true}
             onProgress={videoProgress}
             resizeMode={'cover'}
             onLoad={onLoad}
+            onLoadStart={onLoadStart}
             source={{uri: url.playbackUrl.toString()}}
             // source={{
             //   uri:
@@ -53,18 +75,106 @@ export const VideoPlayer = ({url}) => {
     </>
   );
 };
+import Avatar from '../../assets/avatar.svg';
+const HorizontalContent = () => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+      }}>
+      <View
+        style={{
+          elevation: 70,
+          borderRadius: 50,
+          marginVertical: 8,
+        }}>
+        <Avatar height={'70'} width={'50'} color="#fff" />
+      </View>
+      <View
+        style={{
+          elevation: 70,
+          borderRadius: 50,
+          marginVertical: 10,
+        }}>
+        <Icon name="heart-outline" color="red" size={40} />
+        <Text style={{color: '#fff', marginLeft: 8}}>12.2K</Text>
+      </View>
+      <View
+        style={{
+          elevation: 70,
+          borderRadius: 50,
+          marginVertical: 6,
+        }}>
+        <Icon name="chatbubble-ellipses-outline" size={40} color="#fff" />
+        <Text style={{color: '#fff', marginLeft: 8}}>12.2K</Text>
+      </View>
+      <View
+        style={{
+          elevation: 100,
+          borderRadius: 50,
+          marginVertical: 10,
+        }}>
+        <Icon name="arrow-redo-outline" size={40} color="#fff" />
+        <Text style={{color: '#fff', marginLeft: 8}}>12.2K</Text>
+      </View>
+      <View
+        style={{
+          height: 50,
+          width: 50,
+          elevation: 100,
+          borderRadius: 50,
+          backgroundColor: '#000',
+          padding: 5,
+          marginVertical: 10,
+        }}>
+        <Icon name="person-circle-outline" size={40} color="#fff" />
+      </View>
+    </View>
+  );
+};
+
+const VerticalContent = () => {
+  return (
+    <View style={{width: 500, flex: 1, flexDirection: 'column'}}>
+      <Text style={{fontSize: 20, color: '#fff', marginVertical: 3}}>
+        @Rashid
+      </Text>
+      <Text style={{fontSize: 20, color: '#fff', marginVertical: 3}}>
+        Hello this is my video
+      </Text>
+      <Text style={{fontSize: 20, color: '#fff', marginVertical: 3}}>
+        <Icon name="musical-notes-outline" color="#fff" size={20} /> song name
+      </Text>
+    </View>
+  );
+};
 var styles = StyleSheet.create({
   backgroundVideo: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    backgroundColor: 'orange',
+    backgroundColor: 'rgba(0,0,0,0.2)',
   },
-  otherContent: {
+  otherContentOne: {
     position: 'absolute',
-    bottom: 100,
-    top: 100,
-    height: 100,
+    bottom: 90,
+    left: 20,
+    elevation: 1,
+    alignSelf: 'center',
+  },
+  otherContentTwo: {
+    position: 'absolute',
+    bottom: 80,
+    right: 10,
+    elevation: 1,
+    alignSelf: 'center',
+  },
+  loader: {
+    position: 'absolute',
     width: 100,
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    bottom: '50%',
+    elevation: 1,
+    alignSelf: 'center',
   },
 });
