@@ -178,10 +178,26 @@ const layoutMaker = () =>
       // }
     },
   );
-
+import * as faker from 'faker';
 const rowRenderer = (type, data) => {
-  console.log(data);
-  return <VideoPlayer url={data} />;
+  let verticalContent = {
+    name: faker.name.lastName(),
+    sentence: faker.lorem.words(),
+    song: faker.lorem.word(),
+  };
+
+  let hc = {
+    likes: parseInt(faker.random.number()) / 100,
+    comments: parseInt(faker.random.number()) / 100,
+    messages: parseInt(faker.random.number()) / 100,
+  };
+  return (
+    <VideoPlayer
+      url={data}
+      horizontalContent={hc}
+      verticalContent={verticalContent}
+    />
+  );
 };
 
 const RenderFooter = ({loading}) =>

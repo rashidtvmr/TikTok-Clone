@@ -10,7 +10,7 @@ import {
 import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export const VideoPlayer = ({url}) => {
+export const VideoPlayer = ({url, verticalContent, horizontalContent}) => {
   let [isVideoPaused, setVideoPaused] = useState(false);
   let [videoLength, setVideoLength] = useState(200);
   let [isLoading, setLoading] = useState(false);
@@ -39,12 +39,23 @@ export const VideoPlayer = ({url}) => {
       {!isLoading && (
         <>
           <View style={styles.otherContentTwo}>
-            <HorizontalContent />
+            <HorizontalContent content={horizontalContent} />
           </View>
           <View style={styles.otherContentOne}>
-            <VerticalContent />
+            <VerticalContent content={verticalContent} />
           </View>
         </>
+      )}
+      {isVideoPaused && (
+        <View
+          style={{
+            elevation: 9999,
+            position: 'absolute',
+            left: '40%',
+            bottom: '50%',
+          }}>
+          <Icon name="caret-forward-circle-outline" size={80} />
+        </View>
       )}
       <TouchableOpacity onPress={onTouch} activeOpacity={0.9}>
         <View>
@@ -76,7 +87,7 @@ export const VideoPlayer = ({url}) => {
   );
 };
 import Avatar from '../../assets/avatar.svg';
-const HorizontalContent = () => {
+const HorizontalContent = ({content}) => {
   return (
     <View
       style={{
@@ -86,11 +97,12 @@ const HorizontalContent = () => {
       }}>
       <View
         style={{
-          elevation: 70,
-          borderRadius: 50,
-          marginVertical: 8,
+          //   elevation: 70,
+          //   borderRadius: 50,
+          marginVertical: 4,
+          //   marginHorizontal:4
         }}>
-        <Avatar height={'70'} width={'50'} color="#fff" />
+        <Avatar height={'50'} width={'55'} color="#fff" />
       </View>
       <View
         style={{
@@ -99,7 +111,7 @@ const HorizontalContent = () => {
           marginVertical: 10,
         }}>
         <Icon name="heart-outline" color="red" size={40} />
-        <Text style={{color: '#fff', marginLeft: 8}}>12.2K</Text>
+        <Text style={{color: '#fff', marginLeft: 4}}>{content.likes}K</Text>
       </View>
       <View
         style={{
@@ -108,7 +120,7 @@ const HorizontalContent = () => {
           marginVertical: 6,
         }}>
         <Icon name="chatbubble-ellipses-outline" size={40} color="#fff" />
-        <Text style={{color: '#fff', marginLeft: 8}}>12.2K</Text>
+        <Text style={{color: '#fff', marginLeft: 4}}>{content.comments}K</Text>
       </View>
       <View
         style={{
@@ -117,7 +129,7 @@ const HorizontalContent = () => {
           marginVertical: 10,
         }}>
         <Icon name="arrow-redo-outline" size={40} color="#fff" />
-        <Text style={{color: '#fff', marginLeft: 8}}>12.2K</Text>
+        <Text style={{color: '#fff', marginLeft: 4}}>{content.messages}K</Text>
       </View>
       <View
         style={{
@@ -135,17 +147,18 @@ const HorizontalContent = () => {
   );
 };
 
-const VerticalContent = () => {
+const VerticalContent = ({content}) => {
   return (
     <View style={{width: 500, flex: 1, flexDirection: 'column'}}>
       <Text style={{fontSize: 20, color: '#fff', marginVertical: 3}}>
-        @Rashid
+        @{content.name}
       </Text>
       <Text style={{fontSize: 20, color: '#fff', marginVertical: 3}}>
-        Hello this is my video
+        {content.sentence}
       </Text>
       <Text style={{fontSize: 20, color: '#fff', marginVertical: 3}}>
-        <Icon name="musical-notes-outline" color="#fff" size={20} /> song name
+        <Icon name="musical-notes-outline" color="#fff" size={20} />{' '}
+        {content.song}
       </Text>
     </View>
   );
