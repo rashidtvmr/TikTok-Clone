@@ -143,7 +143,7 @@ const layoutMaker = () =>
       return ViewTypes.FULL;
     },
     (type, dim) => {
-      dim.height = height - 70;
+      dim.height = height - 72;
       dim.width = width;
     },
   );
@@ -194,13 +194,15 @@ const generateArray = (n) => {
 class ExternalScrollView extends BaseScrollView {
   scrollTo(...args) {
     if (this._scrollViewRef) {
-      this._scrollViewRef.scrollTo(...args);
+      // this._scrollViewRef.scrollTo(...args);
     }
   }
 
   render() {
     return (
       <ScrollView
+        centerContent={true}
+        pagingEnabled={true}
         {...this.props}
         // ref={(scrollView) => {
         //   this._scrollViewRef = scrollView;

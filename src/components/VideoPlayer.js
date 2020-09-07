@@ -171,7 +171,7 @@ const VerticalContent = ({content}) => {
 var styles = StyleSheet.create({
   backgroundVideo: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 71,
+    height: Dimensions.get('window').height - 70,
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
   otherContentOne: {
