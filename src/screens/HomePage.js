@@ -52,7 +52,7 @@ export const HomePage = memo(() => {
       redirect: 'follow',
     };
     try {
-      if (more) setIsLoadingMore(!!more);
+      if (more) setIsLoadingMore(more);
       else setIsLoading(true);
 
       const resData = await fetch(
@@ -65,7 +65,9 @@ export const HomePage = memo(() => {
       console.log(e);
     } finally {
       if (more) {
-        setIsLoadingMore(false);
+        setTimeout(() => {
+          setIsLoadingMore(false);
+        }, 5000);
       } else {
         setIsLoading(false);
         setIsLoadingMore(false);
@@ -88,15 +90,8 @@ export const HomePage = memo(() => {
   };
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      //   listView?.scrollTo({y: 300, animated: true});
-    }, 5000);
-
-    load(generateArray(pageSize));
-
-    return () => {
-      clearTimeout(timeout);
-    };
+    load([]);
+    return;
   }, []);
 
   useEffect(() => {
@@ -166,11 +161,13 @@ const rowRenderer = (type, data) => {
     messages: parseInt(faker.random.number()) / 100,
   };
   return (
-    <VideoPlayer
-      url={data}
-      horizontalContent={hc}
-      verticalContent={verticalContent}
-    />
+    <>
+      <VideoPlayer
+        url={data}
+        horizontalContent={hc}
+        verticalContent={verticalContent}
+      />
+    </>
   );
 };
 

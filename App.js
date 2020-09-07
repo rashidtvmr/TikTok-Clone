@@ -34,7 +34,6 @@ const App = () => {
         </View>
         <View style={styles.videoContainer}>
           {/* HomePage */}
-          {/* <ListView></ListView> */}
           <HomePage></HomePage>
         </View>
         <NavigationBar></NavigationBar>
