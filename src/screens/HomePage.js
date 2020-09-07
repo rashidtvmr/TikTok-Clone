@@ -29,7 +29,7 @@ let pageSize = 0;
 
 let {width, height} = Dimensions.get('window');
 
-const ListView = memo(() => {
+export const HomePage = memo(() => {
   const [data, setData] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -79,11 +79,12 @@ const ListView = memo(() => {
   const loadMore = () => {
     console.log('End Reached', pageSize);
     pageSize++;
-    load([...data, ...generateArray(pageSize)], true);
+    load([...data], true);
   };
 
   const refresh = async () => {
-    load(generateArray(pageSize));
+    pageSize = 0;
+    load([]);
   };
 
   useEffect(() => {
@@ -156,7 +157,7 @@ const rowRenderer = (type, data) => {
   let verticalContent = {
     name: faker.name.lastName(),
     sentence: faker.lorem.words(),
-    song: faker.lorem.words(),
+    song: faker.lorem.sentence(),
   };
 
   let hc = {
@@ -238,8 +239,6 @@ const fake = (data) => {
     }
   });
 };
-
-export default ListView;
 
 const styles = {
   container: {

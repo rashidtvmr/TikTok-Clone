@@ -11,7 +11,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import {VideoPlayer} from './src/components/VideoPlayer';
-import ListView from './src/screens/HomePage';
+import {HomePage} from './src/screens/HomePage';
 
 const App = () => {
   return (
@@ -34,7 +34,8 @@ const App = () => {
         </View>
         <View style={styles.videoContainer}>
           {/* HomePage */}
-          <ListView></ListView>
+          {/* <ListView></ListView> */}
+          <HomePage></HomePage>
         </View>
         <NavigationBar></NavigationBar>
       </View>
@@ -64,20 +65,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3,
     backgroundColor: 'rgba(0,0,0,1)',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     alignContent: 'center',
     elevation: 0,
   },
-  nbCenterButton: {
-    borderColor: '#fff',
-    // borderWidth: 1,
-    // backgroundColor: '#fff',
-    // borderRadius: 10,
-    elevation: 20,
-    // paddingHorizontal: 20,
-  },
   textDimmColor: {
     color: 'rgba(256,256,256,0.5)',
+  },
+  padd: {
+    paddingHorizontal: 20,
   },
 });
 
@@ -86,13 +82,13 @@ import {SvgUri} from 'react-native-svg';
 const NavigationBar = (props) => {
   return (
     <View style={styles.navbarContainer}>
-      <View>
+      <View style={styles.padd}>
         <Icon
           name="home"
           style={{fontSize: 22, marginHorizontal: 2, color: '#fff'}}></Icon>
         <Text style={{color: '#fff'}}>Home</Text>
       </View>
-      <View>
+      <View style={styles.padd}>
         <Icon
           name="search"
           style={{
@@ -103,12 +99,10 @@ const NavigationBar = (props) => {
         <Text style={({color: '#fff'}, styles.textDimmColor)}>Explore</Text>
       </View>
 
-      <View style={styles.nbCenterButton}>
-        <PlusButton width={'75'} height={'35'} />
-        {/* <Image source="./assets/plus.svg" /> */}
-        {/* <Text style={{color: '#000', fontSize: 32, fontWeight: '900'}}>+</Text> */}
-      </View>
       <View>
+        <PlusButton width={'55'} height={'40'} style={{elevation: 100}} />
+      </View>
+      <View style={styles.padd}>
         <Icon
           name="mail-outline"
           style={{
@@ -118,7 +112,7 @@ const NavigationBar = (props) => {
           }}></Icon>
         <Text style={({color: '#fff'}, styles.textDimmColor)}>Inbox</Text>
       </View>
-      <View>
+      <View style={styles.padd}>
         <Icon
           name="person-outline"
           style={{

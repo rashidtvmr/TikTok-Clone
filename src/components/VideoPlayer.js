@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MarqueeText from 'react-native-marquee';
 
 export const VideoPlayer = ({url, verticalContent, horizontalContent}) => {
   let [isVideoPaused, setVideoPaused] = useState(false);
@@ -156,7 +157,13 @@ const VerticalContent = ({content}) => {
       </Text>
       <Text style={{fontSize: 20, color: '#fff', marginVertical: 3}}>
         <Icon name="musical-notes-outline" color="#fff" size={20} />{' '}
-        {content.song}
+        <MarqueeText
+          style={{fontSize: 20, color: '#fff', width: 150}}
+          duration={5000}
+          marqueeOnStart
+          loop>
+          {content.song}
+        </MarqueeText>
       </Text>
     </View>
   );
@@ -171,14 +178,14 @@ var styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     left: 20,
-    elevation: 1,
+    elevation: 999,
     alignSelf: 'center',
   },
   otherContentTwo: {
     position: 'absolute',
     bottom: 10,
     right: 10,
-    elevation: 1,
+    elevation: 9999,
     alignSelf: 'center',
   },
   loader: {
