@@ -171,14 +171,14 @@ var styles = StyleSheet.create({
   },
   otherContentOne: {
     position: 'absolute',
-    bottom: 90,
+    bottom: 10,
     left: 20,
     elevation: 1,
     alignSelf: 'center',
   },
   otherContentTwo: {
     position: 'absolute',
-    bottom: 80,
+    bottom: 10,
     right: 10,
     elevation: 1,
     alignSelf: 'center',

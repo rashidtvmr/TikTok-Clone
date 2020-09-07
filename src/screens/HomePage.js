@@ -136,7 +136,6 @@ const ListView = memo(() => {
         layoutProvider={_layoutProvider}
         dataProvider={dataProvider}
         rowRenderer={rowRenderer}
-        style={{elevation: 10}}
       />
 
       {/* <Button title="Load More" onPress={() => loadMore()} /> */}
@@ -157,7 +156,7 @@ const layoutMaker = () =>
       // }
     },
     (type, dim) => {
-      dim.height = height;
+      dim.height = height - 70;
       dim.width = width;
       // switch (type) {
       //   case ViewTypes.HALF_LEFT:
@@ -205,6 +204,7 @@ const RenderFooter = ({loading}) =>
     <ActivityIndicator
       style={{margin: 20, alignSelf: 'center', flex: 1}}
       size="large"
+      color="black"
     />
   );
 
