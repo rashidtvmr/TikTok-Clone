@@ -201,7 +201,6 @@ class ExternalScrollView extends BaseScrollView {
   render() {
     return (
       <ScrollView
-        centerContent={true}
         pagingEnabled={true}
         {...this.props}
         // ref={(scrollView) => {
