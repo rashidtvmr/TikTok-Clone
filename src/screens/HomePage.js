@@ -25,7 +25,7 @@ const ViewTypes = {
 
 let containerCount = 0;
 
-const pageSize = 4;
+let pageSize = 0;
 
 let {width, height} = Dimensions.get('window');
 
@@ -43,7 +43,7 @@ const ListView = memo(() => {
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
-    var raw = JSON.stringify({page: 1000});
+    var raw = JSON.stringify({page: pageSize});
 
     var requestOptions = {
       method: 'POST',
@@ -60,7 +60,7 @@ const ListView = memo(() => {
         requestOptions,
       );
       let json = await resData.json();
-      setData(json);
+      setData([...data, ...json]);
     } catch (error) {
       console.log(e);
     } finally {
@@ -77,7 +77,8 @@ const ListView = memo(() => {
   //
 
   const loadMore = () => {
-    console.log('end');
+    console.log('End Reached', pageSize);
+    pageSize++;
     load([...data, ...generateArray(pageSize)], true);
   };
 
@@ -118,7 +119,6 @@ const ListView = memo(() => {
 
   return (
     <View style={{flex: 1}}>
-      {/* <Button title="Refresh" onPress={() => refresh()} /> */}
       <RecyclerListView
         ref={listView}
         scrollViewProps={{
@@ -137,8 +137,6 @@ const ListView = memo(() => {
         dataProvider={dataProvider}
         rowRenderer={rowRenderer}
       />
-
-      {/* <Button title="Load More" onPress={() => loadMore()} /> */}
     </View>
   );
 });
@@ -147,34 +145,10 @@ const layoutMaker = () =>
   new LayoutProvider(
     (index) => {
       return ViewTypes.FULL;
-      // if (index % 3 === 0) {
-      //   return ViewTypes.FULL;
-      // } else if (index % 3 === 1) {
-      //   return ViewTypes.HALF_LEFT;
-      // } else {
-      //   return ViewTypes.HALF_RIGHT;
-      // }
     },
     (type, dim) => {
       dim.height = height - 70;
       dim.width = width;
-      // switch (type) {
-      //   case ViewTypes.HALF_LEFT:
-      //     dim.width = width / 2;
-      //     dim.height = 160;
-      //     break;
-      //   case ViewTypes.HALF_RIGHT:
-      //     dim.width = width / 2 - 0.001;
-      //     dim.height = 160;
-      //     break;
-      //   case ViewTypes.FULL:
-      //     dim.width = width;
-      //     dim.height = 160;
-      //     break;
-      //   default:
-      //     dim.width = 0;
-      //     dim.height = 0;
-      // }
     },
   );
 import * as faker from 'faker';
@@ -182,7 +156,7 @@ const rowRenderer = (type, data) => {
   let verticalContent = {
     name: faker.name.lastName(),
     sentence: faker.lorem.words(),
-    song: faker.lorem.word(),
+    song: faker.lorem.words(),
   };
 
   let hc = {

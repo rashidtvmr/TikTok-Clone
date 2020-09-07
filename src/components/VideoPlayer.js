@@ -52,7 +52,7 @@ export const VideoPlayer = ({url, verticalContent, horizontalContent}) => {
             elevation: 9999,
             position: 'absolute',
             left: '40%',
-            bottom: '50%',
+            bottom: '45%',
           }}>
           <Icon name="caret-forward-circle-outline" size={80} />
         </View>
@@ -65,7 +65,7 @@ export const VideoPlayer = ({url, verticalContent, horizontalContent}) => {
             resizeMode={'cover'}
             onLoad={onLoad}
             onLoadStart={onLoadStart}
-            source={{uri: url.playbackUrl.toString()}}
+            source={{uri: url.playbackUrl}}
             // source={{
             //   uri:
             //     'https://stream.mux.com/D3g6GK02sh01fyuoazi6ftI7CdPkK02n7stUfWClNjKVfM.m3u8',
@@ -79,8 +79,8 @@ export const VideoPlayer = ({url, verticalContent, horizontalContent}) => {
         style={{
           width: videoLength,
           position: 'relative',
-          top: -1,
-          height: 1,
+          top: -2,
+          height: 2,
           backgroundColor: 'orange',
         }}></View>
     </>
@@ -95,14 +95,8 @@ const HorizontalContent = ({content}) => {
         flexDirection: 'column',
         justifyContent: 'flex-end',
       }}>
-      <View
-        style={{
-          //   elevation: 70,
-          //   borderRadius: 50,
-          marginVertical: 4,
-          //   marginHorizontal:4
-        }}>
-        <Avatar height={'50'} width={'55'} color="#fff" />
+      <View style={{position: 'absolute', top: -70, right: -5}}>
+        <Avatar height={'70'} width={'70'} color="#fff" />
       </View>
       <View
         style={{
@@ -133,15 +127,19 @@ const HorizontalContent = ({content}) => {
       </View>
       <View
         style={{
-          height: 50,
-          width: 50,
           elevation: 100,
           borderRadius: 50,
-          backgroundColor: '#000',
-          padding: 5,
           marginVertical: 10,
         }}>
-        <Icon name="person-circle-outline" size={40} color="#fff" />
+        <Icon
+          name="person-circle-outline"
+          size={50}
+          color="#fff"
+          style={{
+            backgroundColor: '#000',
+            borderRadius: 50,
+          }}
+        />
       </View>
     </View>
   );
@@ -166,7 +164,7 @@ const VerticalContent = ({content}) => {
 var styles = StyleSheet.create({
   backgroundVideo: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    height: Dimensions.get('window').height - 71,
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
   otherContentOne: {
