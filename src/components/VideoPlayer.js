@@ -11,14 +11,12 @@ import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MarqueeText from 'react-native-marquee';
 
+// import InViewPort from 'react-native-inviewport';
+
 export const VideoPlayer = ({url, verticalContent, horizontalContent}) => {
-  let [isVideoPaused, setVideoPaused] = useState(false);
+  let [isVideoPaused, setVideoPaused] = useState(true);
   let [videoLength, setVideoLength] = useState(200);
   let [isLoading, setLoading] = useState(false);
-  function videoProgress(e) {
-    setVideoLength((videoLength = e.currentTime * 30));
-    if (e.currentTime >= e.playableDuration) setVideoLength((videoLength = 0));
-  }
 
   function onTouch() {
     setVideoPaused((isVideoPaused = !isVideoPaused));
@@ -60,9 +58,12 @@ export const VideoPlayer = ({url, verticalContent, horizontalContent}) => {
       )}
       <TouchableOpacity onPress={onTouch} activeOpacity={0.9}>
         <View>
+          {/* <InViewPort
+            onChange={(x) => {
+              console.log(x);
+            }}> */}
           <Video
             repeat={true}
-            onProgress={videoProgress}
             resizeMode={'cover'}
             onLoad={onLoad}
             onLoadStart={onLoadStart}
@@ -74,20 +75,14 @@ export const VideoPlayer = ({url, verticalContent, horizontalContent}) => {
             paused={isVideoPaused}
             style={styles.backgroundVideo}
           />
+          {/* </InViewPort> */}
         </View>
       </TouchableOpacity>
-      <View
-        style={{
-          width: videoLength,
-          position: 'relative',
-          top: -2,
-          height: 2,
-          backgroundColor: 'orange',
-        }}></View>
     </>
   );
 };
 import Avatar from '../../assets/avatar.svg';
+
 const HorizontalContent = ({content}) => {
   return (
     <View
@@ -171,7 +166,7 @@ const VerticalContent = ({content}) => {
 var styles = StyleSheet.create({
   backgroundVideo: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 70,
+    height: '100%', //Dimensions.get('window').height - 70,
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
   otherContentOne: {

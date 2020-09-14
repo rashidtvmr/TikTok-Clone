@@ -105,35 +105,35 @@ export const HomePage = memo(() => {
           position: 'absolute',
           top: 30,
           alignSelf: 'center',
-          elevation: 9999,
+          elevation: 9,
         }}
         size="large"
       />
     );
 
   if (!data.length) return null;
-
   return (
-    <View style={{flex: 1}}>
-      <RecyclerListView
-        ref={listView}
-        scrollViewProps={{
-          refreshControl: (
-            <RefreshControl
-              refreshing={loaded && isLoading}
-              onRefresh={() => refresh()}
-            />
-          ),
-        }}
-        renderFooter={() => <RenderFooter loading={isLoadingMore} />}
-        onEndReached={() => loadMore()}
-        onEndReachedThreshold={1}
-        externalScrollView={ExternalScrollView}
-        layoutProvider={_layoutProvider}
-        dataProvider={dataProvider}
-        rowRenderer={rowRenderer}
-      />
-    </View>
+    // <View style={{flex: 1}}>
+    <RecyclerListView
+      style={{margin: 0, padding: 0}}
+      ref={listView}
+      scrollViewProps={{
+        refreshControl: (
+          <RefreshControl
+            refreshing={loaded && isLoading}
+            onRefresh={() => refresh()}
+          />
+        ),
+      }}
+      renderFooter={() => <RenderFooter loading={isLoadingMore} />}
+      onEndReached={() => loadMore()}
+      onEndReachedThreshold={1}
+      externalScrollView={ExternalScrollView}
+      layoutProvider={_layoutProvider}
+      dataProvider={dataProvider}
+      rowRenderer={rowRenderer}
+    />
+    // </View>
   );
 });
 
@@ -161,20 +161,20 @@ const rowRenderer = (type, data) => {
     messages: parseInt(faker.random.number()) / 100,
   };
   return (
-    <>
+    <View>
       <VideoPlayer
         url={data}
         horizontalContent={hc}
         verticalContent={verticalContent}
       />
-    </>
+    </View>
   );
 };
 
 const RenderFooter = ({loading}) =>
   loading && (
     <ActivityIndicator
-      style={{margin: 20, alignSelf: 'center', flex: 1}}
+      // style={{margin: 20, alignSelf: 'center', flex: 1}}
       size="large"
       color="black"
     />
@@ -182,61 +182,27 @@ const RenderFooter = ({loading}) =>
 
 const dataProviderMaker = (data) =>
   new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data);
-
-const generateArray = (n) => {
-  let arr = new Array(n);
-  for (let i = 0; i < n; i++) {
-    arr[i] = i;
-  }
-  return arr;
-};
-
 class ExternalScrollView extends BaseScrollView {
   scrollTo(...args) {
     if (this._scrollViewRef) {
-      // this._scrollViewRef.scrollTo(...args);
+      this._scrollViewRef.scrollTo(...args);
     }
   }
-
   render() {
     return (
+      // <Viewport.Tracker>
       <ScrollView
+        nestedScrollEnabled={true}
         pagingEnabled={true}
         {...this.props}
-        // ref={(scrollView) => {
-        //   this._scrollViewRef = scrollView;
-        // }}
+        ref={(scrollView) => {
+          this._scrollViewRef = scrollView;
+        }}
       />
+      // </Viewport.Tracker>
     );
   }
 }
-
-class CellContainer extends React.Component {
-  constructor(args) {
-    super(args);
-    this._containerId = containerCount++;
-  }
-  render() {
-    return (
-      <View {...this.props}>
-        {this.props.children}
-        <Text>Cell Id: {this._containerId}</Text>
-      </View>
-    );
-  }
-}
-
-const fake = (data) => {
-  return new Promise(function (resolve, reject) {
-    try {
-      setTimeout(() => {
-        resolve(data);
-      }, 3000);
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
 
 const styles = {
   container: {
